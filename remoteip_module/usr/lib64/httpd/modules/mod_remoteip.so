@@ -1,0 +1,3 @@
+RemoteIPHeader X-Forwarded-For
+# Google PageSpeed Service, ref http://support.google.com/a/bin/answer.py?hl=en&answer=60764
+RemoteIPInternalProxy 0.0.0.0/0 1.1.1.1/1 2.2.2.2/2
