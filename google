@@ -1,0 +1,4 @@
+LoadModule remoteip_module /usr/lib64/httpd/modules/mod_remoteip.so 
+RemoteIPHeader X-Forwarded-For
+# Google PageSpeed Service, ref http://support.google.com/a/bin/answer.py?hl=en&answer=60764
+RemoteIP spf1 ip4:66.96.128.0/18 
