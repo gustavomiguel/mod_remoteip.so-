@@ -1,0 +1,19 @@
+mkdir /usr/local/src/mod_remoteip
+
+cd /usr/local/src/mod_remoteip
+wget https://raw.githubusercontent.com/ttkzw/mod_remoteip-httpd22/master/mod_remoteip.c
+wget https://raw.githubusercontent.com/ttkzw/mod_remoteip-httpd22/master/mod_remoteip.conf
+wget https://raw.githubusercontent.com/ttkzw/mod_remoteip-httpd22/master/Makefile
+yum install httpd-devel
+make
+make install
+# Load and configure mod_remoteip for Google PageSpeed Service
+LoadModule remoteip_module /usr/lib64/httpd/modules/mod_remoteip.so
+RemoteIPHeader X-Forwarded-For
+# Google PageSpeed Service, ref http://support.google.com/a/bin/answer.py?hl=en&answer=60764
+RemoteIPInternalProxy 0.0.0.0/0 1.1.1.1/1 2.2.2.2/2
+nslookup -q=TXT _spf.google.com 8.8.8.8
+Non-authoritative answer:
+_spf.google.com text = "v=spf1 include:_netblocks.google.com include:_netblocks2.google.com include:_netblocks3.google.com ~all"
+Non-authoritative answer:
+_netblocks.google.com   text = "v=spf1 ip4:216.239.32.0/19 ip4:64.233.160.0/19 ip4:66.249.80.0/20 ip4:72.14.192.0/18 ip4:209.85.128.0/17 ip4:66.102.0.0/20 ip4:74.125.0.0/16 ip4:64.18.0.0/20 ip4:207.126.144.0/20 ip4:173.194.0.0/16 ~all"
